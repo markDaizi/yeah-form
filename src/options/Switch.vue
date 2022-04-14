@@ -7,19 +7,13 @@
       size="mini"
       label-position="top"
     >
-      <el-form-item>
-        <el-alert
-          title="无属性"
-          type="info"
-          effect="light"
-          :closable="false"
-          center
-        ></el-alert>
+      <el-form-item label="绑定字段">
+        <el-input v-model="form.value" placeholder="请输入字段名"></el-input>
       </el-form-item>
 
       <el-form-item>
         <div class="formAction">
-          <el-button @click="handleClose">取消</el-button>
+          <el-button @click="handleClose">关闭</el-button>
         </div>
       </el-form-item>
 
@@ -46,7 +40,9 @@ export default {
   data() {
     return {
       rules: {},
-      form: {},
+      form: {
+        value: ''
+      },
       defaultForm: null,
       timer: 0,
     };
@@ -70,7 +66,7 @@ export default {
     },
 
     /**
-     * 取消
+     * 关闭
      */
     handleClose() {
       this.$store.commit("setCurrentId", undefined);

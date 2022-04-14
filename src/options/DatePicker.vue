@@ -19,7 +19,7 @@
 
       <el-form-item>
         <div class="formAction">
-          <el-button @click="handleClose">取消</el-button>
+          <el-button @click="handleClose">关闭</el-button>
         </div>
       </el-form-item>
 
@@ -70,7 +70,7 @@ export default {
     },
 
     /**
-     * 取消
+     * 关闭
      */
     handleClose() {
       this.$store.commit("setCurrentId", undefined);

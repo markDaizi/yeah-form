@@ -7,6 +7,9 @@
       :inline="false"
       size="mini"
     >
+      <el-form-item label="绑定字段">
+        <el-input v-model="form.value" placeholder="请输入"></el-input>
+      </el-form-item>
       <el-form-item label="输入框占位文本">
         <el-input v-model="form.placeholder" placeholder="请输入"></el-input>
       </el-form-item>
@@ -84,7 +87,7 @@
 
       <el-form-item>
         <div class="formAction">
-          <el-button @click="handleClose">取消</el-button>
+          <el-button @click="handleClose">关闭</el-button>
         </div>
       </el-form-item>
       <el-form-item>
@@ -126,6 +129,7 @@ export default {
         rows: undefined,
         readonly: false,
         tabindex: undefined,
+        value: ''
       },
       defaultForm: null,
       timer: 0,
@@ -150,7 +154,7 @@ export default {
     },
 
     /**
-     * 取消
+     * 关闭
      */
     handleClose() {
       this.$store.commit("setCurrentId", undefined);

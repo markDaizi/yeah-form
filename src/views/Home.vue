@@ -3,7 +3,7 @@
     <!-- <Toolbar /> -->
     <el-header height="50px">
       <div class="layout-header">
-        <p>easy-form</p>
+        <p>yeah-form</p>
         <div class="tools-bar">
           <el-button
             title="返回上一步"
@@ -88,6 +88,7 @@ import AttrList from "../components/editor/attribute.vue";
 import CodePreview from "@/components/preview/code.vue";
 import prettier from "prettier/standalone";
 import parserHtml from "prettier/parser-html";
+import vueTemplate from "@/utils/tmp";
 
 export default {
   components: { AsideLeft, Editor, AttrList, CodePreview },
@@ -99,6 +100,7 @@ export default {
       showCode: false,
       show: false,
       isEditing: false,
+      jsStr: "",
     };
   },
   computed: {
@@ -121,13 +123,14 @@ export default {
   },
   watch: {
     elements: {
-      handler() {
+      handler(val) {
         console.log(this.isEditing, "this.isEditing");
         if (!this.isEditing) {
           this.$store.commit("updateHistory");
         } else {
           this.isEditing = false;
         }
+        this.jsStr = this.generateJsCode(val);
       },
       deep: true,
     },
@@ -164,9 +167,11 @@ export default {
           .filter((key) => props[key])
           .reduce((pv, key) => {
             const value = JSON.stringify(props[key]);
-
-            pv += ` :${key}='${value}'`;
-
+            if(key==='value'){
+              pv += ` v-model=${value}`;
+            }else{
+              pv += ` :${key}='${value}'`;
+            }
             return pv;
           }, "");
         let element = `<${tagName} ${attrs}>${children}</${tagName}>`;
@@ -202,7 +207,22 @@ export default {
         plugins: [parserHtml],
       });
 
-      this.code = code;
+      this.code = vueTemplate(code, this.jsStr);
+    },
+    generateJsCode(item) {
+      const props = item["props"] || {};
+      let children = (item.childrenData || []).map((item) => {
+        return this.generateJsCode(item);
+      });
+      let attrs = "";
+      Object.keys(props)
+        .filter((key) => props[key] && key === "value")
+        .forEach((item) => {
+          const value = JSON.stringify(props[item]);
+          attrs = `${value}:null\n`;
+        });
+      let element = `${attrs}${children}`;
+      return element;
     },
     preview() {
       this.show = !this.show;
@@ -241,14 +261,14 @@ export default {
       width: 280px;
       left: 0;
       top: 0;
-      overflow: scroll;
+      overflow: auto;
       // padding-top: 10px;
     }
 
     .right {
       position: absolute;
       height: 100%;
-      overflow: scroll;
+      overflow: auto;
       width: 262px;
       right: 0;
       top: 0;

@@ -1,10 +1,11 @@
 {
-  "name": "easy-form",
+  "name": "yeah-form",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build ",
+    "build:prd": "cross-env CUSTOM_ENV=prd vue-cli-service build --mode=production",
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "node-sass": "^4.12.0",
+    "cross-env": "^5.2.0",
     "push-dir": "^0.4.1",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"

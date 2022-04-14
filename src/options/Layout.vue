@@ -4,7 +4,7 @@
     </el-alert>
 
     <div class="footer-option">
-      <el-button plain size="mini" @click="handleClose">取消</el-button>
+      <el-button plain size="mini" @click="handleClose">关闭</el-button>
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
 
   methods: {
     /**
-     * 取消
+     * 关闭
      */
     handleClose() {
       this.$store.commit("setCurrentId", undefined);

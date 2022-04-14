@@ -8,6 +8,9 @@
       label-position="top"
     >
       <el-row :gutter="2" v-for="(item, index) in form.options" :key="index">
+        <el-form-item label="绑定字段">
+          <el-input v-model="form.value" placeholder="请输入字段名"></el-input>
+        </el-form-item>
         <el-col :span="9" :offset="0">
           <el-form-item label="标签">
             <el-input v-model="item.label"> </el-input>
@@ -44,7 +47,7 @@
 
       <el-form-item>
         <div class="formAction">
-          <el-button @click="handleClose">取消</el-button>
+          <el-button @click="handleClose">关闭</el-button>
         </div>
       </el-form-item>
 
@@ -69,6 +72,7 @@ export default {
       rules: {},
       form: {
         options: [],
+        value: ''
       },
       defaultForm: null,
       timer: 0,
@@ -111,7 +115,7 @@ export default {
     },
 
     /**
-     * 取消
+     * 关闭
      */
     handleClose() {
       this.$store.commit("setCurrentId", undefined);
